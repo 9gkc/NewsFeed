@@ -1,0 +1,78 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  background-color: #eee;
+  margin: 0;
+}
+h1 {
+  padding: 20px;
+  margin: 0 0 20px;
+  background-color: white;
+  text-align: center;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px auto;
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 10px;
+}
+ul li {
+  background-color: white;
+  padding: 15px 15px 60px;
+  border: 1px solid #ddd;
+  position: relative;
+}
+ul li .info {
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  align-items: center;
+}
+ul li .info .author span:first-child {
+  font-weight: bold;
+}
+ul li img {
+  display: block;
+  margin-bottom: 20px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  ul li img {
+    height: 240px;
+  }
+}
+ul li .title {
+  display: block;
+  width: fit-content;
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  line-height: 1.5;
+  min-height: 50px;
+  transition: 0.3s;
+}
+ul li .title:hover {
+  color: #ff6600;
+}
+ul li .description {
+  color: #777;
+  line-height: 1.6;
+}
+.source {
+  position: absolute;
+  bottom: 0;
+  padding: 15px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
