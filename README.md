@@ -1,5 +1,7 @@
 # Latest News Application 📰
 
+> **Live demo:** [Open NewsFeed in your browser](https://9gkc.github.io/NewsFeed/)
+
 <div align="center">
   <img src="https://img.shields.io/github/last-commit/9gkc/NewsFeed?style=for-the-badge&label=Last%20Update&color=58A6FF" alt="Last Update">
   <img src="https://img.shields.io/github/stars/9gkc/NewsFeed?style=for-the-badge&color=58A6FF" alt="GitHub Stars">
