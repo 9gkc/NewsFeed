@@ -21,8 +21,10 @@ This is a simple **Latest News Application** built with vanilla HTML, CSS, and J
 *   **Fetch Latest News**: Displays current top headlines from a specified country (default: US).
 *   **Dynamic Content Loading**: News articles are fetched and rendered dynamically using JavaScript.
 *   **Article Details**: Each news item includes the author, publication date, an image, a truncated title, a description, and the source.
-*   **External Links**: Clickable titles link directly to the full news article.
+*   **External Links**: Clickable titles use HTTPS-only URLs and open with `noopener` protection.
 *   **Responsive Design**: A clean and intuitive user interface that works well on various screen sizes.
+*   **Safe Rendering**: Article content is rendered with DOM APIs rather than injecting remote HTML.
+*   **Clear States**: Loading, empty, and service-error states are announced to assistive technologies.
 
 ## How to Run Locally 💻
 
@@ -33,10 +35,7 @@ Follow these simple steps to get the Latest News Application up and running on y
     git clone <repository-url>
     cd latest-news-application
     ```
-2.  **Get an API Key**: This application uses the [NewsAPI](https://newsapi.org/). You will need to sign up for a free API key and replace the placeholder in `main.js` with your own key.
-    ```javascript
-    const apiKey = "YOUR_NEWSAPI_KEY_HERE"; // Replace with your actual API key
-    ```
-3.  **Open `index.html`**: Simply open the `index.html` file in your preferred web browser. No server setup or build process is required!
+2.  **Configure a server-side proxy**: `main.js` requests `/api/news?pageSize=10`. Configure that endpoint on your server to call [NewsAPI](https://newsapi.org/) with `NEWSAPI_KEY` kept in a server-side environment variable. Never place the key in browser JavaScript or commit it to Git.
+3.  **Serve the project over HTTP**: Run the static files behind the proxy endpoint. Opening `index.html` directly will show the error state because browsers cannot provide the `/api/news` route without a server.
 
-Stay informed with the latest news! 💡
+The application intentionally shows a clear unavailable state when the proxy is not configured; it does not expose or require an API key in the client.

@@ -12,8 +12,13 @@
       rel="stylesheet" />
   </head>
   <body>
-    <h1>Latest News Application</h1>
-    <ul class="news-list"></ul>
+    <header>
+      <h1>Latest News Application</h1>
+      <p class="status" role="status" aria-live="polite">Loading the latest stories…</p>
+    </header>
+    <main>
+      <ul class="news-list" aria-live="polite" aria-busy="true"></ul>
+    </main>
     <script src="main.js"></script>
   </body>
 </html>

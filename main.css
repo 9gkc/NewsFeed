@@ -9,10 +9,23 @@ body {
   margin: 0;
 }
 h1 {
-  padding: 20px;
-  margin: 0 0 20px;
+  padding: 20px 20px 8px;
+  margin: 0;
   background-color: white;
   text-align: center;
+}
+.status {
+  margin: 0;
+  padding: 0 20px 20px;
+  background: white;
+  color: #666;
+  text-align: center;
+}
+.status[data-tone="error"] {
+  color: #b42318;
+}
+main {
+  padding: 1px 20px 20px;
 }
 ul {
   list-style: none;
@@ -25,6 +38,8 @@ ul {
 }
 ul li {
   background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
   padding: 15px 15px 60px;
   border: 1px solid #ddd;
   position: relative;
@@ -60,8 +75,15 @@ ul li .title {
   min-height: 50px;
   transition: 0.3s;
 }
-ul li .title:hover {
+ul li .title:hover,
+ul li .title:focus-visible {
   color: #ff6600;
+}
+.empty-state {
+  grid-column: 1 / -1;
+  padding: 48px 20px;
+  text-align: center;
+  color: #666;
 }
 ul li .description {
   color: #777;
