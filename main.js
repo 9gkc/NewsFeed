@@ -45,11 +45,26 @@ function appendText(parent, tagName, text, className) {
   return element;
 }
 
+function ensureRetryControl() {
+  if (!statusElement || document.querySelector("#retry-news")) return;
+  const retryButton = document.createElement("button");
+  retryButton.type = "button";
+  retryButton.id = "retry-news";
+  retryButton.textContent = "Retry";
+  retryButton.setAttribute("aria-label", "Retry loading news");
+  retryButton.addEventListener("click", () => {
+    fetchNews();
+  });
+  statusElement.insertAdjacentElement("afterend", retryButton);
+}
+
 function displayNews(articles) {
   if (!newsList) return;
   newsList.replaceChildren();
 
-  const validArticles = Array.isArray(articles) ? articles.filter(Boolean) : [];
+  const validArticles = Array.isArray(articles)
+    ? articles.filter((article) => article && (article.title || article.url))
+    : [];
   if (validArticles.length === 0) {
     appendText(newsList, "li", "No stories are available right now.", "empty-state");
     return;
@@ -103,6 +118,8 @@ function displayNews(articles) {
 
 async function fetchNews() {
   setStatus("Loading the latest stories…");
+  const retryButton = document.querySelector("#retry-news");
+  if (retryButton) retryButton.disabled = true;
   try {
     const controller = new AbortController();
     const timeoutId = window.setTimeout(() => controller.abort(), 8_000);
@@ -126,7 +143,10 @@ async function fetchNews() {
         : "The live news feed is unavailable. Please try again later.";
     setStatus(message, "error");
     console.error("Unable to load news", error);
+  } finally {
+    if (retryButton) retryButton.disabled = false;
   }
 }
 
+ensureRetryControl();
 window.addEventListener("DOMContentLoaded", fetchNews);
