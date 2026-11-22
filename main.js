@@ -28,11 +28,13 @@ function truncateString(value, wordCount) {
 
 function formatPublishedAt(value) {
   const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? "Date unavailable" : date.toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+  return Number.isNaN(date.getTime())
+    ? "Date unavailable"
+    : date.toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
 }
 
 function appendText(parent, tagName, text, className) {
@@ -102,10 +104,15 @@ function displayNews(articles) {
 async function fetchNews() {
   setStatus("Loading the latest stories…");
   try {
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), 8_000);
+
     const response = await fetch(`${apiEndpoint}?pageSize=${pageSize}`, {
       headers: { Accept: "application/json" },
-      signal: AbortSignal.timeout(8_000),
+      signal: controller.signal,
     });
+    window.clearTimeout(timeoutId);
+
     if (!response.ok) throw new Error(`News service returned ${response.status}.`);
     const data = await response.json();
     if (!Array.isArray(data.articles)) throw new Error("The news response was invalid.");
@@ -113,7 +120,11 @@ async function fetchNews() {
     setStatus(`${data.articles.length} stories loaded.`);
   } catch (error) {
     displayNews([]);
-    setStatus("The live news feed is unavailable. Please try again later.", "error");
+    const message =
+      error instanceof Error && error.name === "AbortError"
+        ? "The news service timed out. Please try again."
+        : "The live news feed is unavailable. Please try again later.";
+    setStatus(message, "error");
     console.error("Unable to load news", error);
   }
 }
